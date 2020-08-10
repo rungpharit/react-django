@@ -1,7 +1,7 @@
 import actionTypes from './types'
 
-function add_todos(){
-  return {type: actionTypes.ADD_TODOS }
+function add_todos(payload){
+  return {type: actionTypes.ADD_TODOS, payload : payload }
 }
 
 function done_todos(){

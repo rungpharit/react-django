@@ -17,9 +17,16 @@ const initialState = {
 
 
 function todoReducers(state=initialState,action){
-  switch(action.types){
-    case actionTypes.ADD_TODOS :
-      return 1 ;
+  switch(action.type){
+    case actionTypes.ADD_TODOS :  
+      let newTodo = [...state.todos]
+      newTodo.push(action.payload)
+      return {
+        ...state,
+        todos : [
+         ...newTodo
+        ]
+      } ;
     case actionTypes.DONE_TODOS :
       return 2 ;
     case actionTypes.DEL_TODOS :
