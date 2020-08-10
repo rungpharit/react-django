@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import axios from 'axios'
 import styles from './showTodos.module.css'
+
+import { done_todos, del_todos } from '../../../redux/todolist/actions'
 
 class ShowTodos extends Component {
   constructor(props){
@@ -10,23 +13,42 @@ class ShowTodos extends Component {
     this.checkTodo = this.checkTodo.bind(this);
   }
 
-  checkTodo(index){
-    console.log("check :",index)
+  async checkTodo(id){
+    const data = this.props.todolists.filter((todo) => {
+     return todo.id === id
+    })
+    const result = await axios.put(`http://127.0.0.1:8000/api/${id}/`,{
+      id : data[0].id,
+      todo : data[0].todo,
+      done : !data[0].done,
+    })
+    if(result.status === 200){
+      this.props.done_todos(id)
+    }else {
+      alert('Something went wrong')
+    }
+
   }
 
-  delTodo(index){
-    console.log("del",index)
+  async delTodo(id){
+    const result = await axios.delete(`http://127.0.0.1:8000/api/${id}/`)
+    if(result.status === 204){
+      console.log('test',id)
+      this.props.del_todos(id)
+    }else {
+      alert('Something went wrong')
+    }
   }
 
 
   showTodo(){
-    return this.props.todolists.map((todolist,index) => {
+    return this.props.todolists.map((todolist) => {
       const { id, todo, done } = todolist ;
       return (
-        <li key={index} className={styles.todos}> 
-          <input type="checkbox"  onClick={this.checkTodo.bind(this,index)} />
-          <span>{todo}</span>
-          <button onClick={this.checkTodo.bind(this,index)}>x</button>
+        <li key={id} className={styles.todos}> 
+          <input checked={done} type="checkbox" onChange={this.checkTodo.bind(this,id)} />
+          <span className={done ? styles.isDone : styles.notDone}>{todo}</span>
+          <button onClick={this.delTodo.bind(this,id)}>x</button>
         </li>
       )
     })
@@ -34,6 +56,7 @@ class ShowTodos extends Component {
 
 
   render() {
+    console.log(this.props.todolists)
     return (
       <div className={styles.container}>
         {this.showTodo()}
@@ -50,7 +73,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps  = dispatch => {
   return {
-
+    done_todos : (data) => dispatch(done_todos(data)),
+    del_todos : (data) => dispatch(del_todos(data))
   }
 }
 

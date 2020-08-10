@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import axios from 'axios'
 
 import validateTodo from '../../../utility/validate';
 import { add_todos } from '../../../redux/todolist/actions'
@@ -8,9 +9,7 @@ export class AddTodos extends Component {
   constructor(props){
     super(props)
     this.state = {
-      id : 3,
       todo : "",
-      done : false
     }
 
     this.addTodoHandler = this.addTodoHandler.bind(this)
@@ -24,14 +23,19 @@ export class AddTodos extends Component {
     })
   }
 
-  sendTodo(){
+  async sendTodo(){
     const isText = validateTodo(this.state.todo)
     if(isText){
-      this.props.add_todos(this.state)
       this.setState({
         ...this.state,
         todo : ''
       })
+      const result = await axios.post('http://127.0.0.1:8000/api/',{
+        todo :   this.state.todo,
+      })
+      if(result.status === 201){
+        this.props.add_todos(result.data)
+      }
     }else{
       alert("please type again")
     }
@@ -48,11 +52,12 @@ export class AddTodos extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return  {
-    
+
+const mapStateToProps = (state) => {
+  return {
   }
 }
+
 const mapDispatchToProps  = dispatch => {
   return {
     add_todos : (data) => dispatch(add_todos(data))
