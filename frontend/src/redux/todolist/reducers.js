@@ -1,8 +1,20 @@
 import actionTypes from './types';
 
 const initialState = {
-  todos : [],
-}
+  todos : [
+    {
+      id:1,
+      todo : 'test 1',
+      done : false
+    },
+    {
+      id:2,
+      todo : 'test 2',
+      done : true
+    },
+  ],
+};
+
 
 function todoReducers(state=initialState,action){
   switch(action.types){

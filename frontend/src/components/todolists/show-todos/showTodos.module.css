@@ -1,0 +1,8 @@
+.container{
+  
+}
+
+.todos {
+  display: flex;
+  justify-content: space-evenly;
+}
