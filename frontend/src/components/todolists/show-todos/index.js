@@ -11,11 +11,11 @@ class ShowTodos extends Component {
   }
 
   checkTodo(index){
-    console.log(index)
+    console.log("check :",index)
   }
 
   delTodo(index){
-    console.log(index)
+    console.log("del",index)
   }
 
 
@@ -34,7 +34,6 @@ class ShowTodos extends Component {
 
 
   render() {
-    console.log(this.props.todolists)
     return (
       <div className={styles.container}>
         {this.showTodo()}
