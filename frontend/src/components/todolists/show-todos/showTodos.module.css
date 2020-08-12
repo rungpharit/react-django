@@ -1,8 +1,33 @@
-.container{
-  
-}
-
 .todos {
   display: flex;
-  justify-content: space-evenly;
+  padding: 10px;
+  font-size: 1.2rem;
+}
+
+.noTodo{
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+input[type="checkbox"]{
+  margin: auto 30px auto 0px;
+}
+
+span{
+  width: 90%;
+  display: flex;
+  align-items: center;
+ }
+
+.todos button {
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 50%;
+ }
+
+.isDone {
+  color: red;
+  text-decoration: line-through;
+
 }

@@ -2,16 +2,7 @@ import actionTypes from './types';
 
 const initialState = {
   todos : [
-    {
-      id:1,
-      todo : 'test 1',
-      done : false
-    },
-    {
-      id:2,
-      todo : 'test 2',
-      done : true
-    },
+
   ],
 };
 
@@ -19,20 +10,45 @@ const initialState = {
 function todoReducers(state=initialState,action){
   switch(action.type){
     case actionTypes.ADD_TODOS :  
-      let newTodo = [...state.todos]
-      newTodo.push(action.payload)
+    const newTodos = [...state.todos]
+    newTodos.push(action.payload)
       return {
         ...state,
         todos : [
-         ...newTodo
+         ...newTodos
         ]
       } ;
     case actionTypes.DONE_TODOS :
-      return 2 ;
+      const changeDone = state.todos.map((todo) => {  
+        if(todo.id === action.payload){
+          return {
+            id : todo.id,
+            todo : todo.todo,
+            done :!todo.done
+          }
+        }else{
+          return {...todo}
+        }
+      })
+      return {
+        ...state,
+        todos : [...changeDone]
+      }
     case actionTypes.DEL_TODOS :
-      return 3 ;
+      const new_data = state.todos.filter((todo) => {
+        return todo.id !== action.payload
+      })
+      console.log('del;' ,new_data)
+      return {
+        todos : [...new_data]
+      } ;
     case actionTypes.GET_TODOS :
-      return 4 ;
+      return {
+        ...state,
+        todos : [
+         ...action.payload
+        ]
+      }  ;
     default :
     return state ;
   }

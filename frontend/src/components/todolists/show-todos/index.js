@@ -1,42 +1,74 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import axios from 'axios'
 import styles from './showTodos.module.css'
+
+import { done_todos, del_todos } from '../../../redux/todolist/actions'
 
 class ShowTodos extends Component {
   constructor(props){
-    super(props)
+    super(props);
+    this.todoRef = React.createRef()
 
     this.showTodo = this.showTodo.bind(this);
     this.checkTodo = this.checkTodo.bind(this);
   }
+ 
 
-  checkTodo(index){
-    console.log(index)
+  async checkTodo(id){
+    const data = this.props.todolists.filter((todo) => {
+     return todo.id === id
+    })
+    const result = await axios.put(`http://127.0.0.1:8000/api/${id}/`,{
+      id : data[0].id,
+      todo : data[0].todo,
+      done : !data[0].done,
+    })
+    if(result.status === 200){
+      this.props.done_todos(id)
+    }else {
+      alert('Something went wrong')
+    }
+
   }
 
-  delTodo(index){
-    console.log(index)
+  async delTodo(id){
+    const result = await axios.delete(`http://127.0.0.1:8000/api/${id}/`)
+    if(result.status === 204){
+      this.props.del_todos(id)
+    }else {
+      alert('Something went wrong')
+    }
   }
 
 
   showTodo(){
-    return this.props.todolists.map((todolist,index) => {
-      const { id, todo, done } = todolist ;
+    if(this.props.todolists.length <= 0){
       return (
-        <li key={index} className={styles.todos}> 
-          <input type="checkbox"  onClick={this.checkTodo.bind(this,index)} />
-          <span>{todo}</span>
-          <button onClick={this.checkTodo.bind(this,index)}>x</button>
-        </li>
+        <div className={styles.noTodo}>
+          There is no Todo
+        </div>
       )
-    })
+    } else{
+      return this.props.todolists.map((todolist) => {
+        const { id, todo, done } = todolist ;
+        return (
+          <li key={id} className={styles.todos}> 
+            <input checked={done} type="checkbox" onChange={this.checkTodo.bind(this,id)} />
+            <span className={done ? styles.isDone  : ""}>{todo}</span>
+            <button onClick={this.delTodo.bind(this,id)}>x</button>
+          </li>
+        )
+      })
+    }
   }
 
 
+
+
   render() {
-    console.log(this.props.todolists)
     return (
-      <div className={styles.container}>
+      <div ref={this.todoRef} className={styles.container}>
         {this.showTodo()}
       </div>
     )
@@ -51,7 +83,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps  = dispatch => {
   return {
-
+    done_todos : (data) => dispatch(done_todos(data)),
+    del_todos : (data) => dispatch(del_todos(data))
   }
 }
 
