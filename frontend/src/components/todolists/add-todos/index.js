@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 
+import styles from './addTodos.module.css'
 import validateTodo from '../../../utility/validate';
 import { add_todos } from '../../../redux/todolist/actions'
 
@@ -44,8 +45,8 @@ export class AddTodos extends Component {
 
   render() {
     return (
-      <div>
-        <input type="text" name="todo" onChange={this.addTodoHandler} value={this.state.todo}/>
+      <div className={styles.container}>
+        <input placeholder="Joi Something Down !" type="text" name="todo" onChange={this.addTodoHandler} value={this.state.todo}/>
         <button onClick={() => {this.sendTodo()}}>SAVE</button>
       </div>
     )

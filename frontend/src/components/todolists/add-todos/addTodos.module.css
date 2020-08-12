@@ -1,0 +1,49 @@
+.container {
+  margin-bottom: 20px;
+  
+}
+hr{
+  width: 60%;
+  margin-bottom: 10px;
+}
+.container input[type='text']{
+  width: 80%;
+  box-sizing: border-box;
+  border: solid 1px gainsboro;
+  padding: 0.5rem;
+  text-align: right;
+  background-color: gainsboro;
+}
+
+.container input:focus{
+  outline: none;
+  
+}
+
+.container button{
+  width: 20%;
+  padding: 0.5em;
+  border: solid #084177;
+  background-color: #084177;
+  color: white;
+  cursor: pointer;
+}
+.container button:hover{
+ background-color: #545a8c;
+ border: solid #545a8c;
+}
+
+
+
+@media (max-width:1024px){
+
+  .container input[type='text']{
+    width: 80%;
+    box-sizing: border-box;
+  }
+  
+  .container button{
+    width: 20%;
+  }
+}
+

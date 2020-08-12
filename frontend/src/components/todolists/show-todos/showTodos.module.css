@@ -1,17 +1,52 @@
-.container{
-  
-}
-
 .todos {
   display: flex;
-  justify-content: space-evenly;
+  padding: 10px;
+  font-size: 1.2rem;
 }
+
+.noTodo{
+  text-align: center;
+  font-size: 1rem;
+}
+
+input[type="checkbox"]{
+  margin: auto 30px auto 0px;
+}
+
+span{
+  width: 90%;
+  display: flex;
+  align-items: center;
+ }
+
+.todos button {
+  align-self: flex-end;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 50%;
+ }
 
 .isDone {
+  color: red;
   text-decoration: line-through;
-}
-
-.notDone {
-
 
 }
+
+
+
+
+
+/* .lines{
+  position: absolute;
+  width: 128px;
+  height: 2px;
+  background-color: red;
+  animation: lineThrough 0.8s ;
+}
+
+
+@keyframes lineThrough {
+  from { width: 0px;}
+  to {width: 128px;}
+} */

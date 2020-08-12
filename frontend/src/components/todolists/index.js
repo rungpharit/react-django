@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
+import  styles  from './todolist.module.css';
 import AddTodos from './add-todos';
 import ShowTodos from './show-todos';
 import { get_todos } from '../../redux/todolist/actions'
@@ -19,7 +20,7 @@ class Todolists extends Component {
 
   render() {
     return (
-      <div>
+      <div className={styles.container}>
         <AddTodos/>
         <ShowTodos/>
       </div>
