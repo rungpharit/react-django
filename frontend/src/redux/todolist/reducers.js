@@ -2,16 +2,7 @@ import actionTypes from './types';
 
 const initialState = {
   todos : [
-    // {
-    //   id : 1,
-    //   todo :'test',
-    //   done : false
-    // },
-    // {
-    //   id : 2,
-    //   todo :'tst',
-    //   done : false
-    // },
+
   ],
 };
 
