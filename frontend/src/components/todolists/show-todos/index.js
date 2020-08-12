@@ -12,14 +12,8 @@ class ShowTodos extends Component {
 
     this.showTodo = this.showTodo.bind(this);
     this.checkTodo = this.checkTodo.bind(this);
-    this.lineThrough = this.lineThrough.bind(this);
   }
-  componentDidMount(){
-    setTimeout(() => {
-      this.lineThrough()
-    },1000)
-  
-  }
+ 
 
   async checkTodo(id){
     const data = this.props.todolists.filter((todo) => {
@@ -49,9 +43,6 @@ class ShowTodos extends Component {
 
 
   showTodo(){
-    const styleLine = {
-      
-    }
     if(this.props.todolists.length <= 0){
       return (
         <div className={styles.noTodo}>
@@ -64,7 +55,7 @@ class ShowTodos extends Component {
         return (
           <li key={id} className={styles.todos}> 
             <input checked={done} type="checkbox" onChange={this.checkTodo.bind(this,id)} />
-            <span style={{}} className={done ? styles.isDone  : styles.notDone}>{todo}<div className={done ? styles.lines : ''}></div></span>
+            <span className={done ? styles.isDone  : ""}>{todo}</span>
             <button onClick={this.delTodo.bind(this,id)}>x</button>
           </li>
         )
@@ -72,25 +63,10 @@ class ShowTodos extends Component {
     }
   }
 
-  lineThrough(){
-    if(this.todoRef.current !== null){
-      console.log('tewss')
-      const liShowTodos = this.todoRef.current.children;
-      const spanShowTodos = liShowTodos[0].children[1]
-      const lengthText = spanShowTodos.innerText.length
-      console.log('textTodos :',lengthText)
-      const widthLine = 8*lengthText
-      console.log('textTodos :',widthLine)
-    }
-    
-   
-    
-  
-  }
+
 
 
   render() {
-  
     return (
       <div ref={this.todoRef} className={styles.container}>
         {this.showTodo()}
